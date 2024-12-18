@@ -18,7 +18,7 @@ public class Knight extends Piece{
     private final static int[] CANDIDATE_MOVE_COORDINATES = {-17,-15,-10,-6,6,10,15,17};
 
     public Knight(final int piecePosition, final Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+        super(PieceType.KNIGHT,piecePosition, pieceAlliance);
     }
 
     @Override
@@ -59,6 +59,11 @@ public class Knight extends Piece{
 
     private static boolean isSecondColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.SECOND_COLUMN[currentPosition] && (candidateOffset==-10 || candidateOffset==6);
+    }
+
+    @Override
+    public String toString(){
+        return PieceType.KNIGHT.toString();
     }
 
     private static boolean isSeventhColumnExclusion(final int currentPosition, final int candidateOffset){
