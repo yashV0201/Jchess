@@ -3,6 +3,7 @@ package com.chess.engine.board;
 import com.chess.engine.Alliance;
 import com.chess.engine.piece.*;
 import com.chess.engine.player.BlackPlayer;
+import com.chess.engine.player.Player;
 import com.chess.engine.player.WhitePlayer;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -17,6 +18,7 @@ public class Board {
 
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
+    private final Player currentPlayer;
 
     //used builder pattern for creation of board
     private Board(Builder boardBuilder){
@@ -29,6 +31,7 @@ public class Board {
 
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves,blackStandardLegalMoves);
         this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves,blackStandardLegalMoves);
+        this.currentPlayer = null;
     }
 
     @Override
@@ -51,6 +54,18 @@ public class Board {
 
     public Collection<Piece> getWhitePieces(){
         return this.whitePieces;
+    }
+
+    public Player blackPlayer() {
+        return this.blackPlayer;
+    }
+
+    public Player whitePlayer() {
+        return this.whitePlayer;
+    }
+
+    public Player currentPlayer() {
+        return this.currentPlayer;
     }
 
     private static String prettyPrint(final Tile tile) {
@@ -133,6 +148,7 @@ public class Board {
 
         return builder.build();
     }
+
     //this builder class is used to set the values used for boards like its configuration and movemaker
     public static class Builder{
 
