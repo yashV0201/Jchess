@@ -31,7 +31,7 @@ public class Board {
 
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves,blackStandardLegalMoves);
         this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves,blackStandardLegalMoves);
-        this.currentPlayer = null;
+        this.currentPlayer = boardBuilder.nextMoveMaker.choosePlayer(this.whitePlayer,this.blackPlayer);
     }
 
     @Override
