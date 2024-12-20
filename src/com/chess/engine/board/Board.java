@@ -7,6 +7,7 @@ import com.chess.engine.player.Player;
 import com.chess.engine.player.WhitePlayer;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
 
 import java.util.*;
 
@@ -147,6 +148,10 @@ public class Board {
         builder.setMoveMaker(Alliance.WHITE);
 
         return builder.build();
+    }
+
+    public Iterable<Move> getAllLegalMoves() {
+        return Iterables.unmodifiableIterable(Iterables.concat(this.whitePlayer.getLegalMoves(), this.blackPlayer.getLegalMoves()));
     }
 
     //this builder class is used to set the values used for boards like its configuration and movemaker
