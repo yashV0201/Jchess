@@ -57,6 +57,11 @@ public class Rook extends Piece{
     }
 
     @Override
+    public boolean isRook() {
+        return true;
+    }
+
+    @Override
     public String toString(){
         return PieceType.ROOK.toString();
     }

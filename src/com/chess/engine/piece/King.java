@@ -47,6 +47,12 @@ public class King extends Piece{
         }
         return ImmutableList.copyOf(legalMoves);
     }
+
+    @Override
+    public boolean isRook() {
+        return false;
+    }
+
     @Override
     public String toString(){
         return PieceType.KING.toString();
