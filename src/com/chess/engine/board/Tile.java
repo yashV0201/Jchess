@@ -20,6 +20,10 @@ public abstract class Tile {
         return ImmutableMap.copyOf(emptyTileMap);
     }
 
+    public int getTileCoordinate(){
+        return this.tileCoordinate;
+    }
+
     public static Tile createTile(final int tileCoordinate, final Piece piece){
         return piece != null?new OccupiedTile(tileCoordinate,piece) : new EmptyTile(tileCoordinate);
     }
