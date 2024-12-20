@@ -1,21 +1,28 @@
 package com.chess.gui;
 
+import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
     private final JFrame gameFrame;
     private final BoardPanel boardPanel;
+    private final Board chessBoard;
 
     private final static Dimension OUTER_FRAME_DIMENSION = new Dimension(600,600);
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400,350);
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
+    private static String defaultPieceImagesPath = "art/simple/";
 
     private final Color lightTileColor = Color.decode("#FFFACD");
     private final Color darkTileColor = Color.decode("#593E1A");
@@ -27,7 +34,7 @@ public class Table {
         this.gameFrame.setJMenuBar(tableMenuBar);
 
         this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
-
+        this.chessBoard = Board.createStandardBoard();
         this.boardPanel = new BoardPanel();
         this.gameFrame.add(this.boardPanel,BorderLayout.CENTER);
 
@@ -89,12 +96,32 @@ public class Table {
             setPreferredSize(TILE_PANEL_DIMENSION);
             assignTileColor();
 //            setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            assignTilePieceIcon(chessBoard);
             validate();
+        }
+
+        private void assignTilePieceIcon(final Board board) {
+            this.removeAll();
+            if(board.getTile(this.tileID).isTileOccupied()){
+                String pieceIconPath = "";
+                final BufferedImage image;
+                try {
+                    image = ImageIO.read(new File(defaultPieceImagesPath+
+                            board.getTile(this.tileID).getPiece().getPieceAlliance().toString().substring(0,1)+
+                            board.getTile(this.tileID).getPiece().toString().substring(0,1)+
+                            ".gif"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                add(new JLabel(new ImageIcon(image)));
+            }
         }
 
         private void assignTileColor() {
             boolean isLight = ((tileID / 8) + (tileID % 8)) % 2 == 0;
             setBackground(isLight ? lightTileColor : darkTileColor);
         }
+
     }
 }
